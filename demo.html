@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Live preview | Sechurplets Studio</title>
+<meta name="description" content="Try the Fulfillment-Ready Order Cleaner workflow on sample data, right in your browser.">
+<meta name="theme-color" content="#0A1A22">
+
+<meta property="og:site_name" content="Sechurplets Studio">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Live preview | Sechurplets Studio">
+<meta property="og:description" content="Try the Fulfillment-Ready Order Cleaner workflow on sample data, right in your browser.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site">
+  <nav aria-label="Main">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="" width="32" height="26">Sechurplets Studio</a>
+    <div class="nav-links">
+      <ul class="center-links"><li><a href="store.html">Store</a></li><li><a href="index.html#templates">Templates</a></li><li><a href="index.html#how">How it works</a></li><li><a href="demo.html" aria-current="page">Live demo</a></li><li><a href="index.html#faq">FAQ</a></li></ul>
+      <details class="menu"><summary>Menu</summary><ul><li><a href="store.html">Store</a></li><li><a href="index.html#templates">Templates</a></li><li><a href="index.html#how">How it works</a></li><li><a href="demo.html" aria-current="page">Live demo</a></li><li><a href="index.html#faq">FAQ</a></li></ul></details>
+      <a href="index.html#templates" class="btn btn-primary btn-small">Templates</a>
+    </div>
+  </nav>
+</header>
+<main id="main">
+
+<section class="hero wrap">
+  <span class="kicker">Live preview &middot; runs in your browser</span>
+  <h1 class="hero-head">Try the Order Cleaner workflow on sample data.</h1>
+  <p class="lead">This is a simplified browser preview of what the Fulfillment-Ready Order Cleaner does: duplicates archived, cancelled orders taken out, short zip codes repaired, unusual records flagged. The real product is a Google Sheet with a START HERE tab, an IMPORT tab, and a CONFIG tab. Files you choose here stay in your browser and are never uploaded.</p>
+  <div class="hero-ctas">
+    <a href="#demo" class="btn btn-primary">Try it now</a>
+    <a href="products/order-cleaner.html" class="btn btn-ghost">See full product details</a>
+  </div>
+</section>
+
+<section class="section wrap" id="demo">
+  <span class="kicker">The preview</span>
+  <h2>Paste-in, click, review.</h2>
+  <p class="lead-sm">A messy sample order export is pre-loaded. Click <strong>Run full clean</strong> and look through the three result tabs.</p>
+
+  <div class="panel-grid">
+    <div class="control-panel">
+      <div class="panel-brand"><b>Order Cleaner</b><span>Browser preview</span></div>
+      <button class="action-btn" id="btn-run" type="button">Run full clean</button>
+      <button class="action-btn secondary" id="btn-export" type="button">Export fulfillment CSV</button>
+      <button class="action-btn danger" id="btn-clear" type="button">Clear</button>
+      <div class="status-box" id="status-box" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="data-view">
+      <div class="data-tabs" role="tablist" aria-label="Result tabs">
+        <button class="data-tab active" role="tab" id="tab-master" data-tab="master" aria-selected="true" type="button">CLEANED_MASTER <span class="count-badge" id="count-master"></span></button>
+        <button class="data-tab" role="tab" id="tab-archive" data-tab="archive" aria-selected="false" tabindex="-1" type="button">DUPLICATES_ARCHIVE <span class="count-badge" id="count-archive"></span></button>
+        <button class="data-tab" role="tab" id="tab-risk" data-tab="risk" aria-selected="false" tabindex="-1" type="button">REFUNDS_&amp;_RISK_LOG <span class="count-badge" id="count-risk"></span></button>
+      </div>
+      <div class="table-scroll" id="table-scroll" role="tabpanel" tabindex="0" aria-labelledby="tab-master"></div>
+
+      <details class="raw-toggle" open>
+        <summary>IMPORT (use your own file)</summary>
+        <div class="upload-box" id="upload-box">
+          <input type="file" id="file-input" accept=".csv,.tsv,.txt,.xlsx,.xls">
+          <label for="file-input" class="upload-label">Choose a file</label>
+          <span class="muted"> or drag it here</span>
+          <p class="upload-hint">Accepts .csv, .tsv, .txt, or Excel (.xlsx / .xls). Column names are matched automatically; the real template lets you match them once in CONFIG.</p>
+          <div class="file-status" id="file-status">No file loaded yet.</div>
+          <div class="upload-actions">
+            <button class="btn btn-ghost btn-small" id="btn-sample" type="button">Use sample data instead</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+  <p class="fine-dark">Dates and times are shown as written in the file. Cancelled and refund words are settings in the real template&rsquo;s CONFIG tab.</p>
+</section>
+
+<section class="section wrap">
+  <span class="kicker">What the preview does</span>
+  <h2 class="narrow">The same workflow described on the product page.</h2>
+  <ul class="explain-list">
+    <li>Duplicate Order IDs move to DUPLICATES_ARCHIVE. The first copy is kept.</li>
+    <li>Cancelled orders are taken out of the fulfillment list and listed for review.</li>
+    <li>Short US zip codes get their leading zero back (2134 becomes 02134).</li>
+    <li>Refund-related and unusual records (missing details, invalid email, zero total) are flagged in REFUNDS_&amp;_RISK_LOG.</li>
+    <li>The status line checks that rows read equal rows accounted for. Nothing is deleted.</li>
+    <li>Export downloads the cleaned list as a fulfillment CSV.</li>
+  </ul>
+  <p class="fine-dark">It flags unusual records for you to review. It does not detect fraud and does not fix every possible data problem. If you open the exported CSV in Excel and save it again, Excel may hide leading zeros in zip codes.</p>
+</section>
+
+<section class="section final-band">
+  <div class="wrap final-inner">
+    <div>
+      <h2>Fulfillment-Ready Order Cleaner</h2>
+      <p>$49 &middot; one-time payment &middot; Google Sheets only</p>
+    </div>
+    <a href="https://malikimbenedict.gumroad.com/" class="btn btn-primary">Buy on Gumroad</a>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="logo">SECHURPLETS STUDIO</div>
+      <div class="footer-links">
+        <a href="store.html">Store</a>
+        <a href="demo.html">Live demo</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms &amp; license</a>
+        <a href="refunds.html">Refunds &amp; support</a>
+      </div>
+    </div>
+    <p class="fine">&copy; 2026 Sechurplets Studio &middot; Support: <a href="mailto:sechurplets.studio@outlook.com">sechurplets.studio@outlook.com</a> &middot; WhatsApp: <a href="https://wa.me/639974653945">+63 997 4653 945</a></p>
+  </div>
+</footer>
+<script src="assets/common.js" defer></script><script src="assets/demo.js" defer></script>
+</body>
+</html>
