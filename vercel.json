@@ -39,8 +39,8 @@
   ],
   "functions": {
     "api/*.py": {
-      "includeFiles": "server/**",
-      "maxDuration": 20
+      "includeFiles": "server/**"
     }
   }
 }
+
