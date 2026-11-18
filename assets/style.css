@@ -199,3 +199,46 @@ button.data-tab{font-family:inherit;cursor:pointer}
 .form-error{padding:.75rem 1rem;border:1.5px solid #B3261E;border-radius:var(--radius);background:#FDECEA;color:#7A1510}
 button.btn{font-family:var(--head);cursor:pointer}
 button.btn:disabled{opacity:.6;cursor:not-allowed}
+
+/* ---- UX & device polish ---- */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:5rem}
+a,button,summary,label{touch-action:manipulation;-webkit-tap-highlight-color:rgba(6,182,212,.18)}
+.wrap{padding-inline:max(16px,env(safe-area-inset-left),env(safe-area-inset-right))}
+.hero:has(.hero-grid){padding-bottom:0}
+/* how to order */
+.order-strip{list-style:none;margin:1.5rem 0 .5rem;padding:0;display:grid;gap:.75rem}
+.order-strip li{display:flex;flex-direction:column;gap:.25rem;padding:1rem 1.25rem;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--radius);background:var(--paper)}
+.order-strip b{font-family:var(--head)}
+.order-strip span{color:var(--slate)}
+.order-alt{margin:0 0 .5rem;color:var(--slate)}
+.order-alt a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+@media(min-width:768px){.order-strip{grid-template-columns:repeat(3,1fr)}.tpl-card-wide{grid-column:1/-1}}
+@media(min-width:768px){.tpl-card-wide .actions{max-width:320px}}
+/* product page: order card beside the title on wide screens */
+.order-card{display:none}
+@media(min-width:1000px){
+  .hero.has-aside{display:grid;grid-template-columns:minmax(0,1fr) 340px;column-gap:3.5rem;align-items:start}
+  .hero.has-aside>*{grid-column:1}
+  .hero.has-aside>.order-card{grid-column:2;grid-row:1 / span 12;display:flex;flex-direction:column;gap:.75rem;position:sticky;top:5.5rem;padding:1.5rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);box-shadow:0 8px 24px rgba(10,26,34,.06)}
+  .hero.has-aside .price-row,.hero.has-aside>.fine-dark{display:none}
+  .order-card .btn{width:100%;justify-content:center;text-align:center}
+}
+.order-card-price{margin:0;font:700 2.25rem/1 var(--head);color:var(--accent-ink)}
+.order-card-note{margin:0;color:var(--slate);font-size:.9375rem}
+/* more templates */
+.mini-grid{display:grid;gap:1rem;margin-top:1.25rem}
+@media(min-width:768px){.mini-grid{grid-template-columns:repeat(3,1fr)}}
+.mini-card{display:flex;flex-direction:column;gap:.5rem;padding:1.25rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--tint);color:inherit;text-decoration:none}
+.mini-card:hover{border-color:var(--accent)}
+.mini-top{display:flex;justify-content:space-between;gap:1rem;align-items:flex-start}
+.mini-top i{font-style:normal;font-weight:700;color:var(--accent-ink)}
+.mini-card>span:last-child{color:var(--slate)}
+/* demo tabs: one scrollable row on phones */
+.data-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;padding-bottom:6px}
+.data-tab{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start}
+/* hover effects only where a mouse exists; none for reduced motion */
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.tpl-card,.mini-card{transition:box-shadow .15s,transform .15s}.tpl-card:hover,.mini-card:hover{box-shadow:0 8px 24px rgba(10,26,34,.08);transform:translateY(-2px)}}
+@media print{header.site,.buy-bar,.skip-link,details.menu,.hero-ctas,.order-card,.final-band,.final-cta{display:none!important}body{background:#fff;padding-bottom:0!important}a[href^="http"]:not(.btn)::after{content:" (" attr(href) ")";font-size:.8em}}
+footer .fine a{display:inline;padding:0;min-height:0}
+footer .fine{line-height:1.8}
+@media(max-width:600px){.table-scroll{height:220px}}

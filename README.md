@@ -1,25 +1,14 @@
 # Sechurplets Studio website
 
-Static site (HTML/CSS/JS) plus a small Python checkout backend that runs as Vercel serverless functions.
-Products are digital Google Sheets templates: customers pay with PayPal and the receipt page shows each template's **Make a copy** link.
+Static site (HTML/CSS/JS, no build step). Deploy the folder on Vercel with Framework "Other" and empty build settings.
 
-## How checkout works
-`checkout.html` -> `POST /api/checkout` (server validates, prices the cart, records a PENDING order, creates the PayPal order) -> PayPal -> back to `receipt.html` -> `POST /api/capture` (server captures, checks amount/currency/order, marks PAID in one transaction) -> `GET /api/receipt` (links shown only when PAID).
+- `index.html`, `store.html`, `demo.html`, `privacy.html`, `terms.html`, `refunds.html`, `404.html`
+- `products/` one page per template
+- `assets/` CSS, JS, logo and icons
+- `vercel.json` clean URLs and security headers; `sitemap.xml`, `robots.txt`
 
-- `server/` business logic, database layer (SQLite locally, Postgres in production), PayPal client
-- `api/` one thin Vercel function per endpoint
-- `tests/` `python tests/test_checkout.py`
-- Money is stored as integer cents. Prices are set in `server/catalog.py`, never in the browser.
+## Ordering (current)
+Online checkout is **paused**. Every "Order by email" button opens a prefilled email to sechurplets.studio@outlook.com, and product pages also offer WhatsApp. Prices and product facts come from "Sechurplets Studio: Product Listing Copy".
 
-## Try it locally (no PayPal account needed)
-```
-python -m server.dev_server
-```
-Open http://localhost:3000. It uses a fake PayPal and a local `store.db`. Never deploy with `PAYPAL_MOCK`.
-
-## Go live
-1. Create a Postgres database (Vercel -> Storage -> Neon) and copy its connection string.
-2. Create a PayPal app at developer.paypal.com (start in sandbox).
-3. In Vercel -> Project -> Settings -> Environment Variables add everything in `.env.example`
-   (Make a copy links, PayPal keys, `DATABASE_URL`). Tables are created automatically on first request.
-4. Redeploy, do a sandbox purchase, then switch `PAYPAL_ENV=live` with your live keys.
+## Paused PayPal checkout
+`paused-checkout/` holds the finished backend (Python API, database layer, PayPal client, tests, checkout and receipt pages). It is excluded from deployment by `.vercelignore` and is not linked from the site. See `paused-checkout/README.md` before turning it on.
