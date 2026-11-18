@@ -9,7 +9,7 @@
   function showError(msg) { err.textContent = msg; err.hidden = !msg; }
 
   fetch('/api/products', { headers: { Accept: 'application/json' } })
-    .then(function (r) { return r.json(); })
+    .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || 'Could not load the product details.'); return j; }); })
     .then(function (data) {
       var bySlug = {};
       data.products.forEach(function (p) { bySlug[p.slug] = p; });
@@ -37,7 +37,7 @@
         showError('Payment was cancelled. You have not been charged.');
       }
     })
-    .catch(function () { showError('Could not load the product details. Please refresh and try again.'); btn.disabled = true; });
+    .catch(function (e) { showError((e && e.message && e.message !== 'Failed to fetch' && !/JSON|Unexpected/.test(e.message)) ? e.message : 'Could not load the product details. Please refresh and try again, or email us to order.'); btn.disabled = true; });
 
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
