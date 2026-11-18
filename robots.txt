@@ -1,2 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /checkout
+Disallow: /receipt
+
+Sitemap: https://sechurplets-studio-website.vercel.app/sitemap.xml
